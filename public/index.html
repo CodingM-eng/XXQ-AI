@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>XXQ AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#120d1f;--p1:#1a1330;--p2:#241a45;--ln:#3a2d66;--ac:#9b6bff;--ac2:#c9a8ff;--tx:#f1ecff;--mu:#a99ecb;--ok:#5fd6a1;--er:#ff7a9c;--wa:#ffc56b;--r:14px;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="light"]{--bg:#f6f2ff;--p1:#ffffff;--p2:#efe8ff;--ln:#d9cdf5;--ac:#6d3fe0;--ac2:#4b27a8;--tx:#1d1433;--mu:#625485;--ok:#12805a;--er:#c2264f;--wa:#9a6400}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html,body{height:100%;margin:0}
+*,*::before,*::after{box-sizing:border-box}
+body{background:var(--bg);color:var(--tx);font:500 15px/1.55 Manrope,system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--ac2);outline-offset:2px}
+.app{display:grid;grid-template-columns:264px minmax(0,1fr) 300px;height:100%}
+.app.noctx{grid-template-columns:264px minmax(0,1fr) 0}
+.sb{background:var(--p1);border-right:1px solid var(--ln);display:flex;flex-direction:column;min-height:0;z-index:30}
+.brand{display:flex;gap:10px;align-items:center;padding:16px}
+.logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#b58cff,#6d3fe0 60%,#3b1d99);display:grid;place-items:center;font-weight:800;color:#fff}
+.brand b{font-size:18px;letter-spacing:.2px}
+.nav{flex:1;overflow:auto;padding:4px 10px}
+.nav button{display:flex;gap:10px;align-items:center;width:100%;text-align:left;background:none;border:0;border-radius:10px;padding:9px 10px;color:var(--mu)}
+.nav button:hover{background:var(--p2);color:var(--tx)}
+.nav button[aria-current="page"]{background:var(--p2);color:var(--tx);box-shadow:inset 3px 0 0 var(--ac)}
+.nav .ic{width:22px;text-align:center}
+.sep{height:1px;background:var(--ln);margin:8px 6px}
+.prof{padding:12px 14px;border-top:1px solid var(--ln);display:flex;gap:10px;align-items:center}
+.av{width:34px;height:34px;border-radius:50%;background:var(--p2);display:grid;place-items:center;border:1px solid var(--ln)}
+.prof small{color:var(--mu);display:block}
+main{display:flex;flex-direction:column;min-width:0;min-height:0}
+.top{display:flex;gap:10px;align-items:center;padding:12px 18px;border-bottom:1px solid var(--ln)}
+.top h1{font-size:17px;margin:0;flex:1}
+.iconbtn{background:var(--p1);border:1px solid var(--ln);border-radius:10px;padding:7px 11px}
+.iconbtn:hover{border-color:var(--ac)}
+.menu{display:none}
+.body{flex:1;overflow:auto;padding:20px 18px}
+.wrap{max-width:860px;margin:0 auto}
+.ctx{background:var(--p1);border-left:1px solid var(--ln);overflow:auto;padding:16px;min-height:0}
+.noctx .ctx{display:none}
+.ctx h3,.card h3{font-size:13px;margin:0 0 8px;color:var(--ac2)}
+.blk{border:1px solid var(--ln);border-radius:12px;padding:12px;margin-bottom:12px;background:var(--bg)}
+.muted{color:var(--mu)}
+.card{background:var(--p1);border:1px solid var(--ln);border-radius:var(--r);padding:16px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.empty{border:1px dashed var(--ln);border-radius:var(--r);padding:28px;text-align:center;color:var(--mu)}
+.msg{margin:12px 0;padding:12px 14px;border-radius:var(--r);border:1px solid var(--ln);white-space:pre-wrap;overflow-wrap:anywhere}
+.msg.u{background:var(--p2);margin-left:12%}
+.msg.err{border-color:var(--er);background:color-mix(in srgb,var(--er) 10%,var(--p1))}
+.msg small{display:block;color:var(--mu);margin-bottom:4px}
+.composer{border-top:1px solid var(--ln);padding:12px 18px;background:var(--bg)}
+.composer .box{max-width:860px;margin:0 auto;background:var(--p1);border:1px solid var(--ln);border-radius:16px;padding:10px}
+.composer textarea{width:100%;min-height:64px;max-height:200px;resize:vertical;background:none;border:0;outline:0}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.grow{flex:1}
+.btn{border:1px solid var(--ln);background:var(--p2);border-radius:10px;padding:8px 14px;font-weight:600}
+.btn.pri{background:linear-gradient(135deg,#a77bff,#6d3fe0);border-color:transparent;color:#fff}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+label{display:block;font-weight:600;margin:10px 0 4px;font-size:13px}
+input[type=text],input[type=email],input[type=url],input[type=password],select,textarea.f{width:100%;background:var(--bg);border:1px solid var(--ln);border-radius:10px;padding:9px 11px}
+textarea.f{min-height:96px}
+.chip{border:1px solid var(--ln);background:var(--p1);border-radius:999px;padding:6px 12px;font-size:13px}
+.chip:hover{border-color:var(--ac)}
+.steps{list-style:none;padding:0;margin:0}
+.steps li{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--ln)}
+.steps li:last-child{border:0}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--ln);margin-top:7px;flex:none}
+.tag{font-size:12px;border:1px solid var(--wa);color:var(--wa);border-radius:999px;padding:1px 8px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tabs button{background:none;border:1px solid var(--ln);border-radius:999px;padding:6px 14px;color:var(--mu)}
+.tabs button[aria-selected="true"]{background:var(--ac);border-color:var(--ac);color:#fff}
+.login{height:100%;display:grid;place-items:center;padding:20px;background:radial-gradient(900px 500px at 70% -10%,rgba(155,107,255,.28),transparent),radial-gradient(700px 500px at 0% 110%,rgba(109,63,224,.25),transparent),var(--bg)}
+.login .card{max-width:420px;width:100%;padding:28px}
+.login h1{margin:14px 0 4px;font-size:26px}
+.gbtn{width:100%;margin-top:18px;padding:12px;font-weight:700;background:#fff;color:#1d1433;border:0;border-radius:12px}
+.note{margin-top:14px;border:1px solid var(--wa);border-radius:12px;padding:10px 12px;font-size:13px;color:var(--wa)}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--p2);border:1px solid var(--ac);border-radius:12px;padding:10px 16px;max-width:92vw;z-index:99;display:none}
+#toast.show{display:block}
+.scrim{display:none}
+@media(max-width:1023px){
+ .app,.app.noctx{grid-template-columns:72px minmax(0,1fr)}
+ .sb .lbl,.brand b,.prof div{display:none}
+ .nav button{justify-content:center}
+ .ctx{position:fixed;right:0;top:0;bottom:0;width:min(320px,90vw);transform:translateX(100%);transition:transform .2s;z-index:40;display:block}
+ .noctx .ctx{display:block}
+ .app.ctxopen .ctx{transform:none}
+}
+@media(max-width:767px){
+ .app,.app.noctx{grid-template-columns:minmax(0,1fr)}
+ .sb{position:fixed;left:0;top:0;bottom:0;width:268px;transform:translateX(-100%);transition:transform .2s}
+ .sb .lbl,.brand b,.prof div{display:inline-block}
+ .nav button{justify-content:flex-start}
+ .app.navopen .sb{transform:none}
+ .app.navopen .scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:20}
+ .menu{display:inline-block}
+ .msg.u{margin-left:0}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="firebase-config.js"></script>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const NAV=[
+ ['chat','💬','Yeni Sohbet'],['project','➕','Yeni Proje'],['game','🎮','Oyun Stüdyosu'],['web','🌐','Web Sitesi Stüdyosu'],
+ ['build','📦','EXE / APK Oluşturucu'],['web2apk','📱','Web Sitesinden APK'],['sep'],
+ ['library','🗂','Proje Kitaplığı'],['history','🕘','Sohbet Geçmişi'],['templates','🧩','Şablonlar'],['docs','📖','Dokümantasyon'],
+ ['settings','⚙️','Ayarlar'],['admin','🛡️','Yönetim']
+];
+const TITLES={chat:'Yapay Zekâ Sohbeti',project:'Yeni Proje',game:'Oyun Stüdyosu',web:'Web Sitesi Stüdyosu',build:'EXE / APK Oluşturucu',web2apk:'Web Sitesinden APK',library:'Proje Kitaplığı',history:'Sohbet Geçmişi',templates:'Şablonlar',docs:'Dokümantasyon',settings:'Ayarlar',admin:'Yönetim Paneli'};
+const PROMPTS=['Çok oyunculu, envanter ve üretim sistemi olan 3 boyutlu bir hayatta kalma oyunu yap','Fotoğrafçı için duyarlı bir portfolyo sitesi oluştur','Notlarını yerel olarak saklayan bir Windows masaüstü uygulaması tasarla','Barkod okuyan basit bir Android uygulaması hazırla'];
+const STATES=['Üretildi','Önizlendi','Derleme başarılı','Doğrulanmış çıktı'];
+let view='login',tab='overview',msgs=[],draft='',ctxOpen=true,me=null;
+const RANKS={super_admin:'Süper Yönetici',admin:'Yönetici',developer:'Geliştirici',pro:'Pro',member:'Üye',trial:'Deneme'};
+try{const t=localStorage.getItem('xxq-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}
+function toast(t){const el=$('#toast');el.textContent=t;el.className='show';clearTimeout(toast.h);toast.h=setTimeout(()=>el.className='',5200)}
+const NOBACK='Bu önizlemede arka uç bağlı değil; işlem başlatılmadı.';
+
+function studio(cfg){
+ const fields=cfg.fields.map(f=>f.t==='select'
+  ?`<label for="${f.id}">${f.l}</label><select id="${f.id}">${f.o.map(o=>`<option>${esc(o)}</option>`).join('')}</select>`
+  :f.t==='area'?`<label for="${f.id}">${f.l}</label><textarea class="f" id="${f.id}" placeholder="${esc(f.p||'')}"></textarea>`
+  :f.t==='check'?`<label class="row" style="font-weight:500"><input type="checkbox" id="${f.id}"> ${f.l}</label>`
+  :`<label for="${f.id}">${f.l}</label><input type="${f.t}" id="${f.id}" placeholder="${esc(f.p||'')}" autocomplete="off">`).join('');
+ return `<div class="wrap"><p class="muted">${cfg.d}</p>
+ <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+ <form class="card" data-studio="${cfg.id}"><h3>${cfg.h}</h3>${fields}<div class="row" style="margin-top:14px"><button class="btn pri" type="submit">${cfg.b}</button></div></form>
+ <div class="card"><h3>Durum</h3><ul class="steps">${STATES.map(s=>`<li><span class="dot"></span><div>${s}<br><small class="muted">Bekliyor</small></div></li>`).join('')}</ul>
+ <div class="note">Araç zinciri algılanmadı. Doğrulanmış bir çıktı oluşmadan indirme sunulmaz.</div></div></div></div>`;
+}
+const STUDIOS={
+ game:{id:'game',d:'Fikrinizi anlatın; tasarım belgesi, teknoloji önerisi ve proje yapısı onayınızla üretilir.',h:'Yeni oyun',b:'Plan oluştur',fields:[
+  {t:'area',id:'g1',l:'Oyun fikri',p:'Örn. 2D platform oyunu, zıplama ve düşmanlar'},
+  {t:'select',id:'g2',l:'Oyun türü',o:['2D oyun','3D oyun','Tarayıcı oyunu','Çok oyunculu prototip','Platform','Hayatta kalma','Yarış','Bulmaca','RYO prototipi','Kule savunma','Eğitici oyun']},
+  {t:'select',id:'g3',l:'Teknoloji',o:['HTML / CSS / JavaScript','TypeScript','React','Phaser (2D)','Three.js (3D)','Babylon.js (3D)','Godot','Unity (yalnızca proje kaynağı)']}]},
+ web:{id:'web',d:'Doğal dille tam bir web sitesi üretin; mevcut dosyalar onayınız olmadan değiştirilmez.',h:'Yeni web sitesi',b:'Plan oluştur',fields:[
+  {t:'area',id:'w1',l:'Site tanımı',p:'Örn. Fotoğrafçı portfolyosu'},
+  {t:'select',id:'w2',l:'Site türü',o:['Açılış sayfası','Portfolyo','SaaS paneli','Blog','Dokümantasyon sitesi','E-ticaret prototipi','Tarayıcı oyunu','Kurumsal site']}]},
+ build:{id:'build',d:'Windows EXE veya Android APK için kaynak kod ve paketleme yapılandırması üretin.',h:'Yeni uygulama',b:'Derleme planı oluştur',fields:[
+  {t:'area',id:'b1',l:'Uygulama tanımı'},
+  {t:'select',id:'b2',l:'Hedef ve teknoloji',o:['Windows EXE — Electron','Windows EXE — Tauri','Windows EXE — .NET','Android APK — Kotlin','Android APK — Capacitor','Android APK — React Native']},
+  {t:'text',id:'b3',l:'Paket kimliği',p:'com.ornek.uygulama'}]},
+ web2apk:{id:'web2apk',d:'Sahibi olduğunuz veya paketleme izniniz bulunan bir web sitesini Android uygulamasına dönüştürün.',h:'Web sitesinden APK',b:'Ön kontrolü yap',fields:[
+  {t:'url',id:'a1',l:'Web sitesi adresi (https)',p:'https://ornek.com'},
+  {t:'text',id:'a2',l:'Uygulama adı'},{t:'text',id:'a3',l:'Paket kimliği',p:'com.ornek.site'},
+  {t:'check',id:'a4',l:'Bu siteyi paketlemeye iznim olduğunu onaylıyorum'}]}
+};
+function checkUrl(v){
+ let u;try{u=new URL(v)}catch(e){return 'Geçerli bir adres girin.'}
+ if(u.protocol!=='https:')return 'Yalnızca https adresleri kabul edilir.';
+ const h=u.hostname.toLowerCase();
+ if(h==='localhost'||h.endsWith('.local')||h.endsWith('.internal')||h==='[::1]'||/^(0\.|10\.|127\.|169\.254\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/.test(h))return 'Yerel ve özel ağ adresleri engellenir.';
+ return '';
+}
+function adminView(){
+ const T=[['overview','Genel Bakış'],['users','Kullanıcılar'],['ai','Yapay Zekâ'],['ranks','Rütbeler'],['audit','Güvenlik ve Denetim']];
+ const nodata='<div class="empty">Veri yok. Arka uç bağlandığında gerçek veriler burada görünür.</div>';
+ const body={
+  overview:`<div class="grid">${['Yetkili kullanıcı','Aktif kullanıcı','Proje sayısı','Yapay zekâ istekleri','Derleme kuyruğu','Sağlayıcı durumu'].map(x=>`<div class="card"><h3>${x}</h3><div style="font-size:22px">—</div></div>`).join('')}</div>${nodata}`,
+  users:`<div class="card"><h3>Kullanıcı davet et</h3><label for="ie">Google e-posta adresi</label><input id="ie" type="email" disabled placeholder="kisi@gmail.com"><label for="ir">Başlangıç rütbesi</label><select id="ir" disabled><option>Üye</option></select><div class="row" style="margin-top:12px"><button class="btn pri" disabled>Davet gönder</button><span class="tag">Arka uç gerekli</span></div></div>${nodata}`,
+  ai:`<div class="card"><h3>Gemini API anahtarı</h3><p class="muted">Anahtar yalnızca sunucuda şifreli saklanır; tarayıcıya hiçbir zaman geri gönderilmez, yalnızca maskeli durum gösterilir.</p><label for="gk">Anahtar</label><input id="gk" type="password" disabled placeholder="••••••••••••"><div class="row" style="margin-top:12px"><button class="btn" disabled>Bağlantıyı test et</button><button class="btn pri" disabled>Kaydet</button><span class="tag">Arka uç gerekli</span></div></div>`,
+  ranks:`<div class="card"><h3>Varsayılan rütbeler</h3><ul class="steps">${[['Süper Yönetici','Tam platform denetimi; korumalıdır'],['Yönetici','Yalnızca devredilen yetkiler'],['Geliştirici','Gelişmiş proje araçları'],['Pro','Yüksek kullanım limitleri'],['Üye','Standart erişim'],['Deneme','Kısıtlı erişim ve düşük limit']].map(r=>`<li><span class="dot" style="background:var(--ac)"></span><div><b>${r[0]}</b><br><small class="muted">${r[1]}</small></div></li>`).join('')}</ul></div>`,
+  audit:nodata
+ }[tab];
+ return `<div class="wrap"><div class="tabs" role="tablist">${T.map(t=>`<button role="tab" aria-selected="${tab===t[0]}" data-tab="${t[0]}">${t[1]}</button>`).join('')}</div>${body}</div>`;
+}
+function mainView(){
+ if(STUDIOS[view])return studio(STUDIOS[view]);
+ switch(view){
+ case 'chat':return `<div class="wrap">${msgs.length?msgs.map(m=>`<div class="msg ${m.c}"><small>${m.w}</small>${esc(m.t)}</div>`).join(''):
+  `<div class="empty"><b style="color:var(--tx);font-size:18px">Ne geliştirmek istersin?</b><p>Bir oyun, web sitesi, EXE veya APK fikrini anlat.</p><div class="row" style="justify-content:center">${PROMPTS.map((p,i)=>`<button class="chip" data-p="${i}">${esc(p)}</button>`).join('')}</div></div>`}</div>`;
+ case 'project':return `<div class="wrap"><div class="grid">${[['game','🎮','Oyun'],['web','🌐','Web sitesi'],['build','📦','EXE / APK'],['web2apk','📱','Web sitesinden APK']].map(x=>`<button class="card" data-go="${x[0]}" style="text-align:left"><div style="font-size:26px">${x[1]}</div><b>${x[2]}</b></button>`).join('')}</div></div>`;
+ case 'library':return `<div class="wrap"><div class="row" style="margin-bottom:12px"><input type="text" class="grow" placeholder="Projelerde ara" aria-label="Projelerde ara"><button class="btn" data-go="project">Yeni proje</button></div><div class="empty"><b style="color:var(--tx)">Henüz proje yok</b><p>Projeleriniz, sürüm geçmişi ve kontrol noktalarıyla burada listelenir.</p></div></div>`;
+ case 'history':return `<div class="wrap"><div class="empty">Sohbet geçmişi boş.</div></div>`;
+ case 'templates':return `<div class="wrap"><div class="grid">${['2D platform oyunu','3D hayatta kalma','Bulmaca oyunu','Kule savunma','Portfolyo sitesi','Açılış sayfası','SaaS paneli','Blog'].map(x=>`<div class="card"><b>${x}</b><p class="muted">Şablon, arka uç bağlandığında projeye dönüştürülür.</p></div>`).join('')}</div></div>`;
+ case 'docs':return `<div class="wrap"><div class="card"><h3>Başlarken</h3><p>1. Bir fikir yazın. 2. Planı onaylayın. 3. Üretilen kaynağı inceleyin ve değişiklik farklarını kabul edin ya da reddedin. 4. Araç zinciri varsa derleyin.</p><p>Her çıktı dört aşamadan geçer: <b>Üretildi, Önizlendi, Derleme başarılı, Doğrulanmış çıktı</b>. Yalnızca doğrulanmış çıktı indirilebilir.</p></div></div>`;
+ case 'settings':return `<div class="wrap"><div class="card"><h3>Görünüm</h3><div class="row"><button class="btn" data-theme="dark">Koyu tema</button><button class="btn" data-theme="light">Açık tema</button></div><label for="lg">Dil</label><select id="lg"><option>Türkçe</option></select></div></div>`;
+ case 'admin':return adminView();
+ }
+}
+function ctxView(){
+ return `<div class="row" style="margin-bottom:12px"><h3 style="margin:0" class="grow">Bağlam</h3><button class="iconbtn" data-ctx aria-label="Paneli kapat">✕</button></div>
+ <div class="blk"><h3>Proje dosyaları</h3><span class="muted">Açık proje yok</span></div>
+ <div class="blk"><h3>Derleme durumu</h3><span class="muted">Derleme yok</span></div>
+ <div class="blk"><h3>Seçili çerçeve</h3><span class="muted">Seçilmedi</span></div>
+ <div class="blk"><h3>Kota</h3><span class="muted">Kullanılan kota: — birim<br>Kalan kota: — birim<br>Günlük limit: — birim</span></div>
+ <div class="blk"><h3>Son hatalar</h3><span class="muted">Hata yok</span></div>
+ <div class="blk"><h3>Uygulama planı</h3><span class="muted">Plan henüz oluşturulmadı</span></div>`;
+}
+function render(){
+ const r=$('#root');
+ if(view==='login'){
+  r.innerHTML=`<div class="login"><div class="card"><div class="logo" style="width:48px;height:48px;font-size:22px">X</div><h1>XXQ AI</h1><p class="muted">Oyun ve uygulama geliştirme platformu. Yalnızca davetli hesaplar giriş yapabilir.</p><button class="gbtn" data-login>Google ile Giriş Yap</button><div class="note">Giriş Firebase ile yapılır ve davet kontrolü sunucuda yapılır. Sunucu çalışmıyorsa yalnızca arayüz önizlemesi açılabilir.</div><button class="btn" style="width:100%;margin-top:12px" data-preview>Arayüz önizlemesini aç</button></div></div>`;return;
+ }
+ const app=$('.app'),keep=app?[...app.classList].filter(c=>c==='navopen'||c==='ctxopen'):[];
+ r.innerHTML=`<div class="app ${ctxOpen?'':'noctx'} ${keep.join(' ')}"><div class="scrim" data-scrim></div>
+ <nav class="sb" aria-label="Ana gezinme"><div class="brand"><div class="logo">X</div><b>XXQ AI</b></div>
+ <div class="nav">${NAV.map(n=>n[0]==='sep'?'<div class="sep"></div>':`<button data-go="${n[0]}" ${view===n[0]?'aria-current="page"':''}><span class="ic">${n[1]}</span><span class="lbl">${n[2]}</span></button>`).join('')}</div>
+ <div class="prof"><div class="av">👤</div><div class="grow" style="min-width:0"><b style="display:block;overflow:hidden;text-overflow:ellipsis">${me?esc(me.email):'Önizleme'}</b><small>Rütbe: ${me?(RANKS[me.rankKey]||esc(me.rankKey)):'—'}</small></div>${me?'<button class="iconbtn" data-logout aria-label="Çıkış yap" title="Çıkış yap">⎋</button>':''}</div></nav>
+ <main><div class="top"><button class="iconbtn menu" data-nav aria-label="Menüyü aç">☰</button><h1>${TITLES[view]}</h1>
+ ${view==='chat'?`<label class="muted" for="model" style="margin:0">Model</label><select id="model" style="width:auto"><option>Gemini — yapılandırılmadı</option><option disabled>Claude — yapılandırılmadı</option><option disabled>GPT — yapılandırılmadı</option></select>`:''}
+ <button class="iconbtn" data-ctx aria-label="Bağlam panelini aç veya kapat">▤</button></div>
+ <div class="body">${mainView()}</div>
+ ${view==='chat'?`<div class="composer"><div class="box"><textarea id="prompt" aria-label="Mesaj" placeholder="Fikrini yaz… (Gönder: Ctrl+Enter)">${esc(draft)}</textarea><div class="row"><button class="btn" data-attach>📎 Dosya ekle</button><span class="grow"></span><button class="btn" disabled>Durdur</button><button class="btn pri" data-send>Gönder</button></div></div></div>`:''}
+ </main><aside class="ctx" aria-label="Bağlam paneli">${ctxView()}</aside></div>`;
+}
+async function googleLogin(){
+ const c=window.XXQ_FIREBASE_CONFIG||(typeof firebaseConfig!=='undefined'?firebaseConfig:null);
+ if(!c||!c.apiKey){toast('Firebase yapılandırılmamış: public/firebase-config.js dosyasını doldurun.');return}
+ try{
+  const B='https://www.gstatic.com/firebasejs/10.14.1/';
+  const [{initializeApp},{getAuth,GoogleAuthProvider,signInWithPopup,signOut}]=await Promise.all([import(B+'firebase-app.js'),import(B+'firebase-auth.js')]);
+  const auth=getAuth(initializeApp(c));
+  const cred=await signInWithPopup(auth,new GoogleAuthProvider());
+  const idToken=await cred.user.getIdToken();
+  const r=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({idToken})});
+  const j=await r.json().catch(()=>({}));
+  await signOut(auth);
+  if(!r.ok){toast(j.message||'Giriş başarısız oldu.');return}
+  me=j.user;view='chat';render();
+ }catch(e){
+  console.error('Giriş hatası:',e);
+  const M={'auth/unauthorized-domain':'Bu adres Firebase\'de izinli değil. Sayfayı http://localhost:3000 ile açın veya Authorized domains listesine ekleyin.','auth/popup-blocked':'Tarayıcı açılır pencereyi engelledi. Bu site için açılır pencerelere izin verin.','auth/popup-closed-by-user':'Giriş penceresi kapatıldı.','auth/cancelled-popup-request':'Giriş penceresi kapatıldı.','auth/operation-not-allowed':'Firebase\'de Google girişi etkin değil.','auth/invalid-api-key':'Firebase apiKey geçersiz; firebase-config.js dosyasını kontrol edin.','auth/api-key-not-valid':'Firebase apiKey geçersiz; firebase-config.js dosyasını kontrol edin.','auth/network-request-failed':'Ağ hatası; internet bağlantınızı kontrol edin.'};
+  const net=e instanceof TypeError?'Sunucuya veya Firebase kütüphanesine ulaşılamadı. npm run dev çalışıyor mu ve sayfa http://localhost:3000 üzerinden mi açıldı?':'';
+  toast((M[e&&e.code]||net||'Giriş başarısız oldu. Lütfen tekrar deneyin.')+(e&&e.code?' ('+e.code+')':''));
+ }
+}
+async function logout(){
+ try{await fetch('/api/auth/logout',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:'{}'})}catch(e){}
+ me=null;msgs=[];view='login';render();
+}
+function send(){
+ const t=($('#prompt')?.value||'').trim();if(!t)return;
+ draft='';msgs.push({c:'u',w:'Sen',t});
+ msgs.push({c:'err',w:'Sistem',t:'Yanıt üretilemedi: Gemini sağlayıcısı bu önizlemede yapılandırılmadı. Yönetici, Yönetim › Yapay Zekâ bölümünden anahtarı tanımlamalıdır.'});
+ render();const b=$('.body');b.scrollTop=b.scrollHeight;
+}
+document.addEventListener('click',e=>{
+ const g=e.target.closest('[data-go]');
+ if(g){view=g.dataset.go;$('.app')?.classList.remove('navopen');render();return}
+ if(e.target.closest('[data-login]')){googleLogin();return}
+ if(e.target.closest('[data-logout]')){logout();return}
+ if(e.target.closest('[data-preview]')){view='chat';render();return}
+ if(e.target.closest('[data-send]')){send();return}
+ if(e.target.closest('[data-attach]')){toast('Dosya doğrulaması sunucuda yapılır; bu önizlemede ek yüklenemez.');return}
+ const p=e.target.closest('[data-p]');if(p){draft=PROMPTS[p.dataset.p];render();$('#prompt')?.focus();return}
+ const tb=e.target.closest('[data-tab]');if(tb){tab=tb.dataset.tab;render();return}
+ const th=e.target.closest('[data-theme]');if(th){document.documentElement.dataset.theme=th.dataset.theme;try{localStorage.setItem('xxq-theme',th.dataset.theme)}catch(x){}return}
+ if(e.target.closest('[data-nav]')){$('.app').classList.add('navopen');return}
+ if(e.target.closest('[data-scrim]')){$('.app').classList.remove('navopen');return}
+ if(e.target.closest('[data-ctx]')){
+  if(matchMedia('(max-width:1023px)').matches)$('.app').classList.toggle('ctxopen');
+  else{ctxOpen=!ctxOpen;$('.app').classList.toggle('noctx',!ctxOpen)}
+ }
+});
+document.addEventListener('input',e=>{if(e.target.id==='prompt')draft=e.target.value});
+document.addEventListener('keydown',e=>{if(e.target.id==='prompt'&&e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();send()}});
+document.addEventListener('submit',e=>{
+ const f=e.target.closest('[data-studio]');if(!f)return;e.preventDefault();
+ if(f.dataset.studio==='web2apk'){
+  if(!$('#a4').checked){toast('Devam etmek için paketleme izni onayı gerekir.');return}
+  const err=checkUrl($('#a1').value.trim());if(err){toast(err);return}
+  toast('Adres ön kontrolden geçti. DNS, yönlendirme ve ağ doğrulaması sunucuda yapılır; derleme başlatılmadı.');return;
+ }
+ toast(NOBACK);
+});
+render();
+fetch('/api/auth/me',{credentials:'same-origin'}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.user){me=j.user;view='chat';render()}}).catch(()=>{});
+</script>
+</body>
+</html>
